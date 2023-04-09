@@ -1,33 +1,23 @@
 import "./styles/game-board.css";
-import React from "react";
 import { useState } from "react";
 import { useFish } from "./FishProvider";
 
 // ! Do not add props to gameboard
 export const GameBoard = () => {
-  const {initialFishes, fish, setFish} = useFish()
+  const {
+    initialFishes,
+    fishIdx,
+    guessWithFishName,
+  } = useFish();
   const [userInput, setUserInput] = useState("");
 
-  const nextFishToName = fish.fishIdx <= initialFishes.length - 1
-    ? initialFishes[fish.fishIdx]
+  const nextFishToName = fishIdx <= initialFishes.length - 1
+    ? initialFishes[fishIdx]
     : null;
 
   function handleSubmit(e) {
     e.preventDefault();
-    const isUserInputCorrect = userInput === nextFishToName.name;
-    if (isUserInputCorrect) {
-      setFish({
-        ...fish,
-        correctCount: fish.correctCount + 1,
-        fishIdx: fish.fishIdx + 1,
-      });
-    } else {
-      setFish({
-        ...fish,
-        incorrectCount: fish.incorrectCount + 1,
-        fishIdx: fish.fishIdx + 1,
-      });
-    }
+    guessWithFishName(userInput, nextFishToName.name)
     setUserInput("");
   }
 

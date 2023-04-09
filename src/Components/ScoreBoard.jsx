@@ -3,13 +3,13 @@ import { useFish } from "./FishProvider";
 const answersLeft = ["trout", "salmon", "tuna", "shark"];
 // ! do not add props to scoreboard
 export const ScoreBoard = () => {
-  const {fish} = useFish()
+  const {fishIdx, correctCount, incorrectCount} = useFish()
   const displayAnswers = answersLeft.filter((answerFish, idx) =>
-    idx >= fish.fishIdx
+    idx >= fishIdx
   );
   return (
     <div id="score-board">
-      <div>Incorrect 🔻: {fish.incorrectCount}</div>
+      <div>Incorrect 🔻: {incorrectCount}</div>
       <div id="choices-left">
         {displayAnswers.map((answer) => (
           <div key={answer} className="choice">
@@ -17,7 +17,7 @@ export const ScoreBoard = () => {
           </div>
         ))}
       </div>
-      <div>Correct ✅: {fish.correctCount}</div>
+      <div>Correct ✅: {correctCount}</div>
     </div>
   );
 };

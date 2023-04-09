@@ -1,16 +1,17 @@
 import "./App.css";
 import "./Components/styles/final-score.css";
+import React from "react";
 import { GameBoard } from "./Components/GameBoard";
 import { ScoreBoard } from "./Components/ScoreBoard";
 import { FinalScore } from "./Components/FinalScore";
 import { useFish } from "./Components/FishProvider";
 
 function App() {
-  const {initialFishes, fish} = useFish()
+  const {initialFishes, fishIdx} = useFish()
   return (
       <div className="App">
         <header>
-          {fish.fishIdx === initialFishes.length
+          {fishIdx === initialFishes.length
             ? (
                 <FinalScore />
             )

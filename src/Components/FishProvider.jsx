@@ -3,37 +3,54 @@ import { Images } from "../assets/images";
 
 const FishContext = createContext({});
 
-export const FishProvider = ({ children }) => {
-  const initialFishes = [
-    {
-      name: "trout",
-      url: Images.trout,
-    },
-    {
-      name: "salmon",
-      url: Images.salmon,
-    },
-    {
-      name: "tuna",
-      url: Images.tuna,
-    },
-    {
-      name: "shark",
-      url: Images.shark,
-    },
-  ];
+const initialFishes = [
+  {
+    name: "trout",
+    url: Images.trout,
+  },
+  {
+    name: "salmon",
+    url: Images.salmon,
+  },
+  {
+    name: "tuna",
+    url: Images.tuna,
+  },
+  {
+    name: "shark",
+    url: Images.shark,
+  },
+];
 
-  const [fish, setFish] = useState({
-    correctCount: 0,
-    incorrectCount: 0,
-    fishIdx: 0,
-    incrementProp: (prop) => {
-      setFish({ ...fish, [prop]: fish[prop] + 1 });
-    },
-  });
+export const FishProvider = ({ children }) => {
+  const [correctCount, setCorrectCount] = useState(0);
+  const [incorrectCount, setIncorrectCount] = useState(0);
+  const [fishIdx, setFishIdx] = useState(0);
+
+  const guessWithFishName = (userInput, answerFishName) => {
+    const isUserInputCorrect = userInput === answerFishName 
+    if (isUserInputCorrect) {
+      setCorrectCount(correctCount + 1);
+    } else {
+      setIncorrectCount(incorrectCount + 1);
+    }
+
+    setFishIdx(fishIdx + 1)
+  }
 
   return (
-    <FishContext.Provider value={{ fish, setFish, initialFishes }}>
+    <FishContext.Provider
+      value={{
+        initialFishes,
+        fishIdx,
+        setFishIdx,
+        correctCount,
+        setCorrectCount,
+        incorrectCount,
+        setIncorrectCount,
+        guessWithFishName
+      }}
+    >
       {children}
     </FishContext.Provider>
   );
